@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv sh
+
+s6-setuidgid nonroot
+
+exec /portainer $PORTAINER_ARGS

@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  portainer:
+    build: .
+    image: homecentr/portainer
+    restart: unless-stopped
+    environment:
+      PORTAINER_ARGS: "--no-auth"
+    ports:
+      - "9000:9000/tcp"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
