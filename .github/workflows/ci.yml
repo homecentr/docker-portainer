@@ -5,6 +5,9 @@ on:
       - master
   pull_request:
 
+env:
+  IMAGE_NAME: "homecentr/portainer"
+
 jobs:
   build:
     runs-on: ubuntu-latest
