@@ -1,7 +1,12 @@
+ARG PORTAINER_VERSION="1.23.0"
+
 FROM homecentr/base:1.0.0 as base
-FROM portainer/portainer:1.23.0 as portainer
+FROM portainer/portainer:${PORTAINER_VERSION} as portainer
 
 FROM alpine:3.11.3
+
+LABEL maintainer="Lukas Holota <me@lholota.com>"
+LABEL org.homecentr.dependency-version=${PORTAINER_VERSION}
 
 # Additional arguments to portainer binary
 ENV PORTAINER_ARGS=""
