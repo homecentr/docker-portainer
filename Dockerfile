@@ -4,7 +4,7 @@ FROM portainer/portainer:1.23.2 as portainer
 FROM alpine:3.11.5
 
 LABEL maintainer="Lukas Holota <me@lholota.com>"
-LABEL io.homecentr.dependency-version=1.23.0
+LABEL io.homecentr.dependency-version=1.23.2
 
 # Additional arguments to portainer binary
 ENV PORTAINER_ARGS=""
