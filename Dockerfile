@@ -1,18 +1,10 @@
-ARG PORTAINER_VERSION=1.23.0
-
 FROM homecentr/base:1.0.0 as base
-FROM portainer/portainer:$PORTAINER_VERSION as portainer
+FROM portainer/portainer:1.23.0 as portainer
 
 FROM alpine:3.11.3
 
-# The argument must be defined in each stage where it should be used.
-# It automatically inherits the global (default) value.
-ARG PORTAINER_VERSION
-
-RUN echo "Version: ${PORTAINER_VERSION}"
-
 LABEL maintainer="Lukas Holota <me@lholota.com>"
-LABEL org.homecentr.dependency-version=$PORTAINER_VERSION
+LABEL io.homecentr.dependency-version=1.23.0
 
 # Additional arguments to portainer binary
 ENV PORTAINER_ARGS=""
