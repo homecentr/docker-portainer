@@ -3,7 +3,7 @@ ARG PORTAINER_VERSION=1.23.0
 FROM homecentr/base:1.0.0 as base
 FROM portainer/portainer:$PORTAINER_VERSION as portainer
 
-FROM alpine:3.11.3
+FROM alpine:3.11.5
 
 # The argument must be defined in each stage where it should be used.
 # It automatically inherits the global (default) value.
