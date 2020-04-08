@@ -1,5 +1,5 @@
 FROM homecentr/base:1.1.0 as base
-FROM portainer/portainer:1.23.0 as portainer
+FROM portainer/portainer:1.23.2 as portainer
 
 FROM alpine:3.11.5
 
