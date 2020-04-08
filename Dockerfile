@@ -1,7 +1,7 @@
 FROM homecentr/base:1.0.0 as base
 FROM portainer/portainer:1.23.0 as portainer
 
-FROM alpine:3.11.3
+FROM alpine:3.11.5
 
 LABEL maintainer="Lukas Holota <me@lholota.com>"
 LABEL io.homecentr.dependency-version=1.23.0
