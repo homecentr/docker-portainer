@@ -19,7 +19,7 @@ public class ContainerController {
     }
 
     public void start(HashMap<String, String> envVars) {
-        String dockerImageTag = "homecentr/portainer:local"; // System.getProperty("image_tag");
+        String dockerImageTag = System.getProperty("image_tag");
 
         logger.info("Tested Docker image tag: {}", dockerImageTag);
 
