@@ -1,21 +1,35 @@
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 
-public class PortainerContainerShould extends ContainerTestBase {
-    private static final Logger logger = LoggerFactory.getLogger(ContainerTestBase.class);
+public class PortainerContainerShould {
+    private static final ContainerController Controller = new ContainerController();
+
+    @BeforeClass
+    public static void beforeClass() {
+        HashMap<String, String> envVars = new HashMap();
+        envVars.put("PORTAINER_ARGS", "--no-auth");
+
+        Controller.start(envVars);
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        Controller.stopIfRunning();
+    }
 
     @Test
     public void respondOnWebUiPort() throws IOException {
         URL root = new URL(String.format("http://%s:%d",
-                getContainer().getContainerIpAddress(),
-                getContainer().getMappedPort(9000)));
+                Controller.getContainer().getContainerIpAddress(),
+                Controller.getContainer().getMappedPort(9000)));
 
         HttpURLConnection connection = (HttpURLConnection)root.openConnection();
         connection.connect();
