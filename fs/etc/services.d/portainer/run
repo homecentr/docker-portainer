@@ -1,5 +1,3 @@
-#!/usr/bin/with-contenv sh
+#!/usr/bin/with-contenv ash
 
-s6-setuidgid nonroot
-
-exec /portainer $PORTAINER_ARGS
+exec s6-setuidgid "$PUID:$PGID" /portainer $PORTAINER_ARGS

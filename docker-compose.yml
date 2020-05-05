@@ -1,12 +1,26 @@
 version: "3.7"
 services:
+  dependency:
+    image: alpine
+    command: ping 127.0.0.1
+    networks:
+      deps:
   portainer:
     build: .
     image: homecentr/portainer
     restart: unless-stopped
+    networks:
+      deps:
     environment:
       PORTAINER_ARGS: "--no-auth"
+      # WAIT_FOR_NS_RECORD: "dependency"
+      # WAIT_FOR_NS_RECORD_TIMEOUT: 30
+    # healthcheck:
+    #   start_period: 40s
     ports:
       - "9000:9000/tcp"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
+# networks:
+#   deps:  
