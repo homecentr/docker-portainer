@@ -18,15 +18,18 @@ public class ContainerController {
         _network = Network.newNetwork();
     }
 
-    public void start(HashMap<String, String> envVars) {
+    public void start(HashMap<String, String> envVars, boolean waitToStart) {
         String dockerImageTag = System.getProperty("image_tag");
 
         logger.info("Tested Docker image tag: {}", dockerImageTag);
 
         _container = new GenericContainer<>(dockerImageTag)
                 .withEnv(envVars)
-                .withNetwork(_network)
-                .waitingFor(Wait.forListeningPort());
+                .withNetwork(_network);
+
+        if(waitToStart) {
+            _container = _container.waitingFor(Wait.forLogMessage(".*Starting Portainer.*on :9000.*", 1));
+        }
 
         _container.start();
         _container.followOutput(new Slf4jLogConsumer(logger));

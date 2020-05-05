@@ -25,13 +25,13 @@ public class PortainerContainerWithWaitForNsShould {
         envVars.put("WAIT_FOR_NS_RECORD_TIMEOUT", "10");
 
         try {
-            _controller.start(envVars);
+            _controller.start(envVars, false);
         }
         catch (ContainerLaunchException ex1) {
             // expected, the container fails to start
         }
 
-        waitForMessageInStdOut("has not been successful in the given timeout, failing the container..", 15);
+        waitForMessageInStdOut("failing the container...", 15);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class PortainerContainerWithWaitForNsShould {
         envVars.put("WAIT_FOR_NS_RECORD", "example.docker");
         envVars.put("WAIT_FOR_NS_RECORD_TIMEOUT", "30");
 
-        _controller.start(envVars);
+        _controller.start(envVars, false);
         _controller.startDependencyContainer("example.docker");
 
         waitForMessageInStdOut("resolved successfully", 30);
@@ -54,7 +54,7 @@ public class PortainerContainerWithWaitForNsShould {
             long waitMillis = timeoutExpiredMs - System.currentTimeMillis();
 
             if (waitMillis <= 0) {
-                throw new Exception("The container output did not print the expected message " + message + " in time.");
+                throw new Exception("The container output did not print the expected message \"" + message + "\" in time.");
             }
 
             Thread.sleep(1000);

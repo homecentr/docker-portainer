@@ -17,7 +17,7 @@ public class PortainerContainerShould {
         HashMap<String, String> envVars = new HashMap();
         envVars.put("PORTAINER_ARGS", "--no-auth");
 
-        Controller.start(envVars);
+        Controller.start(envVars, true);
     }
 
     @AfterClass
