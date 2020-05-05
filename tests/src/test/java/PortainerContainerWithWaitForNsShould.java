@@ -31,7 +31,7 @@ public class PortainerContainerWithWaitForNsShould {
             // expected, the container fails to start
         }
 
-        waitForMessageInStdOut("failing the container...", 15);
+        waitForMessageInStdOut("failing the container...", 30);
     }
 
     @Test
