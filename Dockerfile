@@ -1,6 +1,6 @@
 FROM portainer/portainer:1.23.2 as portainer
 
-FROM homecentr/base:2.0.0-alpine
+FROM homecentr/base:2.4.3-alpine
 
 LABEL maintainer="Lukas Holota <me@lholota.com>"
 LABEL io.homecentr.dependency-version=1.23.2
@@ -12,8 +12,7 @@ ENV PORTAINER_ARGS=""
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
 RUN apk add --no-cache \
-      shadow=4.7-r1 \
-      curl=7.67.0-r0
+      curl=7.69.1-r0
 
 # Portainer is based on scratch and therefore we can safely copy the whole image fs
 COPY --from=portainer / /
