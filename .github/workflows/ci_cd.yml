@@ -72,8 +72,3 @@ jobs:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
           DOCKERHUB_REPOSITORY: ${{ env.IMAGE_NAME }}
-
-      - name: "Notify Microbadger to refresh metadata"
-        uses: wei/curl@master
-        with:
-          args: -X POST ${{ secrets.MICROBADGER_NOTIFY_URL }}

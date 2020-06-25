@@ -1,11 +1,10 @@
-[![Project status](https://img.shields.io/badge/Project%20status-stable%20%26%20actively%20maintaned-green.svg)](https://github.com/homecentr/docker-portainer/graphs/commit-activity) 
-[![](https://img.shields.io/github/issues-raw/homecentr/docker-portainer/bug?label=open%20bugs)](https://github.com/homecentr/docker-portainer/labels/bug) 
-[![](https://images.microbadger.com/badges/version/homecentr/portainer.svg)](https://hub.docker.com/repository/docker/homecentr/portainer)
-[![](https://img.shields.io/docker/pulls/homecentr/portainer.svg)](https://hub.docker.com/repository/docker/homecentr/portainer) 
-[![](https://img.shields.io/docker/image-size/homecentr/portainer/latest)](https://hub.docker.com/repository/docker/homecentr/portainer)
+[![Project status](https://badgen.net/badge/project%20status/stable%20%26%20actively%20maintaned?color=green)](https://github.com/homecentr/docker-portainer/graphs/commit-activity) [![](https://badgen.net/github/label-issues/homecentr/docker-portainer/bug?label=open%20bugs&color=green)](https://github.com/homecentr/docker-portainer/labels/bug) [![](https://badgen.net/github/release/homecentr/docker-portainer)](https://hub.docker.com/repository/docker/homecentr/portainer)
+[![](https://badgen.net/docker/pulls/homecentr/portainer)](https://hub.docker.com/repository/docker/homecentr/portainer) 
+[![](https://badgen.net/docker/size/homecentr/portainer)](https://hub.docker.com/repository/docker/homecentr/portainer)
 
 ![CI/CD on master](https://github.com/homecentr/docker-portainer/workflows/CI/CD%20on%20master/badge.svg)
 ![Regular Docker image vulnerability scan](https://github.com/homecentr/docker-portainer/workflows/Regular%20Docker%20image%20vulnerability%20scan/badge.svg)
+
 
 
 # HomeCentr - Portainer
