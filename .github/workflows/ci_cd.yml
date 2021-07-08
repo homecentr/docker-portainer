@@ -10,16 +10,14 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # To add version tags
+      packages: write # To push docker image
     steps:
       - uses: actions/checkout@master
 
-      - name: Set up java for tests execution
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
-
       - name: "Determine release version"
-        uses: codfish/semantic-release-action@master
+        uses: docker://ghcr.io/codfish/semantic-release-action:v1.9.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -29,7 +27,11 @@ jobs:
       - name: "Build Docker image"
         if: env.RELEASE_VERSION != ''
         run: |
-          docker build . -t "$IMAGE_NAME:$RELEASE_VERSION" \
+          docker build . \
+              --tag "$IMAGE_NAME:$RELEASE_VERSION" \
+              --tag "$IMAGE_NAME:$latest" \
+              --tag "ghcr.io/$IMAGE_NAME:$RELEASE_VERSION" \
+              --tag "ghcr.io/$IMAGE_NAME:$latest" \
               --label "org.label-schema.schema-version=1.0" \
               --label "org.label-schema.vcs-ref=${GITHUB_SHA}" \
               --label "org.label-schema.vcs-url=https://github.com/${GITHUB_REPOSITORY}" \
@@ -41,37 +43,18 @@ jobs:
       - name: Test Docker image
         if: env.RELEASE_VERSION != ''
         run: cd tests && gradle test -Dimage_tag=${{ env.IMAGE_NAME }}:${{ env.RELEASE_VERSION }}
-      
-      - name: Scan with Phonito Security
-        if: env.RELEASE_VERSION != ''
-        uses: phonito/phonito-scanner-action@master
-        with:
-          image: ${{ env.IMAGE_NAME }}:${{ env.RELEASE_VERSION }}
-          phonito-token: '${{ secrets.PHONITO_TOKEN }}'
+        env: # To allow downloading packages
+          GITHUB_USERNAME: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Scan with Snyk
-        if: env.RELEASE_VERSION != ''
-        uses: snyk/actions/docker@0.1.1
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: ${{ env.IMAGE_NAME }}:${{ env.RELEASE_VERSION }}
-
-      - name: "Tag image as latest"
-        if: env.RELEASE_VERSION != ''
-        run: "docker tag $IMAGE_NAME:$RELEASE_VERSION $IMAGE_NAME:latest"
-
+      # Docker hub
       - name: "Log into Docker Hub"
         if: env.RELEASE_VERSION != ''
         run: "echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin"
 
-      - name: "Push versioned image"
+      - name: "Push to DockerHub"
         if: env.RELEASE_VERSION != ''
-        run: "docker push $IMAGE_NAME:$RELEASE_VERSION"
-
-      - name: "Push latest image"
-        if: env.RELEASE_VERSION != ''
-        run: "docker push $IMAGE_NAME:latest"
+        run: "docker push $IMAGE_NAME:$RELEASE_VERSION && docker push $IMAGE_NAME:latest"
 
       - name: "Update Docker Hub description"
         if: env.RELEASE_VERSION != ''
@@ -80,3 +63,11 @@ jobs:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
           DOCKERHUB_REPOSITORY: ${{ env.IMAGE_NAME }}
+
+      # GitHub Packages
+      - name: "Log into GitHub Packages"
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: "Push to GitHub Packages"
+        if: env.RELEASE_VERSION != ''
+        run: "docker push ghcr.io/$IMAGE_NAME:$RELEASE_VERSION && docker push ghcr.io/$IMAGE_NAME:latest"
