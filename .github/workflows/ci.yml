@@ -13,11 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-
-      - name: Set up java for tests execution
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
       
       - name: Set tag var
         id: vars
@@ -31,16 +26,6 @@ jobs:
 
       - name: Test Docker image
         run: cd tests && gradle test --info -Dimage_tag=${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.docker_tag }}
-
-      - name: Scan with Phonito Security
-        uses: phonito/phonito-scanner-action@master
-        with:
-          image: ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.docker_tag }}
-          phonito-token: '${{ secrets.PHONITO_TOKEN }}'
-
-      - name: Scan with Snyk
-        uses: snyk/actions/docker@0.1.1
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.docker_tag }}
+        env: # To allow downloading packages
+          GITHUB_USERNAME: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

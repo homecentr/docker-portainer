@@ -3,7 +3,6 @@
 [![](https://badgen.net/docker/size/homecentr/portainer)](https://hub.docker.com/repository/docker/homecentr/portainer)
 
 ![CI/CD on master](https://github.com/homecentr/docker-portainer/workflows/CI/CD%20on%20master/badge.svg)
-![Regular Docker image vulnerability scan](https://github.com/homecentr/docker-portainer/workflows/Regular%20Docker%20image%20vulnerability%20scan/badge.svg)
 
 
 
