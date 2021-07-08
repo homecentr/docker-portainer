@@ -29,9 +29,9 @@ jobs:
         run: |
           docker build . \
               --tag "$IMAGE_NAME:$RELEASE_VERSION" \
-              --tag "$IMAGE_NAME:$latest" \
+              --tag "$IMAGE_NAME:latest" \
               --tag "ghcr.io/$IMAGE_NAME:$RELEASE_VERSION" \
-              --tag "ghcr.io/$IMAGE_NAME:$latest" \
+              --tag "ghcr.io/$IMAGE_NAME:latest" \
               --label "org.label-schema.schema-version=1.0" \
               --label "org.label-schema.vcs-ref=${GITHUB_SHA}" \
               --label "org.label-schema.vcs-url=https://github.com/${GITHUB_REPOSITORY}" \
