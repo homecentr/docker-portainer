@@ -12,7 +12,7 @@ ENV PORTAINER_ARGS=""
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
 RUN apk add --no-cache \
-      curl=7.77.0-r1
+      curl=7.78.0-r0
 
 # Portainer is based on scratch and therefore we can safely copy the whole image fs
 COPY --from=portainer / /
