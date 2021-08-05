@@ -26,7 +26,7 @@ public class ContainerController {
         _container = new GenericContainer<>(dockerImageTag)
                 .withEnv(envVars)
                 .withNetwork(_network)
-                .withExposedPort(9000);
+                .withExposedPorts(9000);
 
         if(waitToStart) {
             _container = _container.waitingFor(Wait.forLogMessage(".*Starting Portainer.*on :9000.*", 1));
