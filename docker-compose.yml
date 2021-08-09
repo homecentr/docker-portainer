@@ -5,6 +5,7 @@ services:
     command: ping 127.0.0.1
     networks:
       deps:
+  
   portainer:
     build: .
     image: homecentr/portainer
@@ -12,7 +13,7 @@ services:
     networks:
       deps:
     environment:
-      PORTAINER_ARGS: "--no-auth"
+      PORTAINER_ARGS: ""
       # WAIT_FOR_NS_RECORD: "dependency"
       # WAIT_FOR_NS_RECORD_TIMEOUT: 30
     # healthcheck:
@@ -22,5 +23,5 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
-# networks:
-#   deps:  
+networks:
+  deps:
