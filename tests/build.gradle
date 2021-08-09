@@ -9,17 +9,26 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/homecentr/lib-testcontainers-extensions")
+        credentials {
+            username = System.getenv("GITHUB_USERNAME")
+            password = System.getenv("GITHUB_TOKEN")
+        }
+    }
 }
 
 dependencies {
     testImplementation group: 'junit', name: 'junit', version: '4.13.2'
-    testImplementation group: 'org.testcontainers', name: 'testcontainers', version: '1.15.3'
+    testImplementation group: 'org.testcontainers', name: 'testcontainers', version: '1.16.0'
+    testImplementation group: 'io.homecentr', name: 'testcontainers-extensions', version: '1.5.0'
     testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.32'
     testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.32'
 }
 
 test {
-    systemProperty 'image_tag', System.getProperty('image_tag')
+    systemProperty 'docker_image_tag', System.getProperty('docker_image_tag')
     afterTest { desc, result ->
         logger.quiet "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
     }
