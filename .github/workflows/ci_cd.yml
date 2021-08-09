@@ -42,7 +42,7 @@ jobs:
 
       - name: Test Docker image
         if: env.RELEASE_VERSION != ''
-        run: cd tests && gradle test -Dimage_tag=${{ env.IMAGE_NAME }}:${{ env.RELEASE_VERSION }}
+        run: cd tests && gradle test -Ddocker_image_tag=${{ env.IMAGE_NAME }}:${{ env.RELEASE_VERSION }}
         env: # To allow downloading packages
           GITHUB_USERNAME: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

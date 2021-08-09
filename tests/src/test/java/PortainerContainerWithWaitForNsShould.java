@@ -3,7 +3,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.testcontainers.containers.ContainerLaunchException;
 
+import java.time.Duration;
 import java.util.HashMap;
+
+import static io.homecentr.testcontainers.WaitLoop.waitFor;
 
 public class PortainerContainerWithWaitForNsShould {
     private ContainerController _controller;
@@ -31,7 +34,7 @@ public class PortainerContainerWithWaitForNsShould {
             // expected, the container fails to start
         }
 
-        waitForMessageInStdOut("failing the container...", 30);
+        waitFor(Duration.ofSeconds(30), () -> _controller.getContainer().getLogsAnalyzer().contains("failing the container..."));
     }
 
     @Test
@@ -44,20 +47,6 @@ public class PortainerContainerWithWaitForNsShould {
         _controller.start(envVars, false);
         _controller.startDependencyContainer("example.docker");
 
-        waitForMessageInStdOut("resolved successfully", 30);
-    }
-
-    private void waitForMessageInStdOut(String message, Integer timeout) throws Exception {
-        long timeoutExpiredMs = System.currentTimeMillis() + (timeout * 1000);
-
-        while(!_controller.getContainer().getLogs().contains(message)) {
-            long waitMillis = timeoutExpiredMs - System.currentTimeMillis();
-
-            if (waitMillis <= 0) {
-                throw new Exception("The container output did not print the expected message \"" + message + "\" in time.");
-            }
-
-            Thread.sleep(1000);
-        }
+        waitFor(Duration.ofSeconds(30), () -> _controller.getContainer().getLogsAnalyzer().contains("resolved successfully"));
     }
 }
