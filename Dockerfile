@@ -1,6 +1,6 @@
 FROM portainer/portainer-ce:2.6.2-alpine as portainer
 
-FROM homecentr/base:3.1.1-alpine
+FROM homecentr/base:3.1.2-alpine
 
 LABEL maintainer="Lukas Holota <me@lholota.com>"
 LABEL io.homecentr.dependency-version=1.24.2
