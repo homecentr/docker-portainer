@@ -1,6 +1,13 @@
 version: 2
+registries:
+  maven-github:
+    type: maven-repository
+    url: https://maven.pkg.github.com/homecentr
+    username: lholota
+    password: ${{ secrets.GH_PACKAGES_TOKEN }}
 updates:
 - package-ecosystem: gradle
+  registries: "*"
   directory: "/tests"
   schedule:
     interval: daily
