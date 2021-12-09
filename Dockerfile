@@ -1,4 +1,4 @@
-FROM portainer/portainer-ce:2.6.3 as portainer
+FROM portainer/portainer-ce:2.11.0 as portainer
 
 FROM homecentr/base:3.2.0-alpine
 
